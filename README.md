@@ -5,4 +5,4 @@ It's a coloring example, where you have a button(Originator) that you can change
 
 The CareTaker class is implemented on a stack.
 
-This is a NetBeans project, so you can import it on NetBeans then run it.
+You will find NetBeans and Eclipse projects, so you can import whatever you want then run it.
