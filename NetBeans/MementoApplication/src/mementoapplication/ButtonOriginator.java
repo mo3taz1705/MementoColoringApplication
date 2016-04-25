@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package mementoapplication;
 
 import javax.swing.JButton;
@@ -17,16 +12,12 @@ import java.awt.Color;
 // Button that supports save option
 public class ButtonOriginator extends JButton{
     private Color color;
-    
-    CareTaker careTaker;
 
-    public ButtonOriginator(Color color, CareTaker careTaker) {
+    public ButtonOriginator(Color color) {
         this.color = color;
-        this.careTaker = careTaker;
         
         // show button with selected color
         this.setBackground(color);
-        save();  // save initial state
     }
     
     public void setColor(Color newColor){
@@ -34,18 +25,24 @@ public class ButtonOriginator extends JButton{
         this.setBackground(color);
     }
 
-    public final void save() {
-        // save color to caretaker
-        careTaker.saveMemento(new ButtonMemento(color));
+    // create Memento to save in the careTaker
+    public ButtonMemento createMemento() {
+        return(new ButtonMemento(color));
     }
     
-    public Boolean undo() {
-        // show button with color returned from the care taker
-        ButtonMemento memento = careTaker.restoreMemento();
-        if(memento != null){
-            setColor(memento.getColor());
-            return true;
+    // restore to the Memento given from the CareTaker
+    public void restoreFromMemento(Object mementoObject) {
+        ButtonMemento memento = (ButtonMemento) mementoObject;
+        setColor(memento.color);
+    }
+    
+    // Memento inner class, to be accessed only by its Originator
+    private class ButtonMemento {
+        private Color color;
+        
+        public ButtonMemento(Color color){
+            this.color = color;
         }
-        return false;
+        
     }
 }

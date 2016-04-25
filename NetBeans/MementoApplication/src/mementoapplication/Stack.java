@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package mementoapplication;
 
 /**
@@ -11,22 +6,22 @@ package mementoapplication;
  */
 public class Stack {
     private final int maxSize;
-    private final ButtonMemento[] stackArray;
+    private final Object[] stackArray;
     private int top;
 
     public Stack(int max) {
         maxSize = max;
-        stackArray = new ButtonMemento[maxSize];
+        stackArray = new Object[maxSize];
         top = -1;
     }
     
-    public void push(ButtonMemento memento){
+    public void push(Object memento){
         if(! isFull()){
             stackArray[++top] = memento;
         }
     }
     
-    public ButtonMemento pop(){
+    public Object pop(){
         if(! isEmpty()){
             return stackArray[top--];
         }

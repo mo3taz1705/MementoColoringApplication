@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package mementoapplication;
 
 import java.awt.Color;
@@ -47,6 +42,19 @@ public class MementoApplication implements ActionListener{
         
         careTaker = new CareTaker(100);
         
+        createFrame();
+        
+        createPaletteButtons();
+
+        createSavedButton();
+        
+        createCommandButtons();
+  
+        showFrame();
+        
+    }
+
+    private void createFrame() {
         // frame creation
         mainFrame = new JFrame("Memento Example");
         mainFrame.setSize(400,400);
@@ -57,35 +65,6 @@ public class MementoApplication implements ActionListener{
         gridBagLayout = new GridBagLayout();
         panel.setLayout(gridBagLayout);
         gridBagConstraints = new GridBagConstraints();
-        
-        createPaletteButtons();
-
-        createSavedButton();
-        
-        createCommandButtons();
-        
-        mainFrame.add(panel);
-        mainFrame.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent windowEvent){
-                System.exit(0);
-            }        
-        });
-        
-        mainFrame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
-        mainFrame.setVisible(true);
-    }
-
-    private void createSavedButton(){
-        buttonOriginator = new ButtonOriginator(Color.LIGHT_GRAY, careTaker);
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipady = 300;
-        gridBagConstraints.weightx = 0.0;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.insets = new Insets(50, 0, 50, 0);
-        panel.add(buttonOriginator, gridBagConstraints);
     }
     
     private void createPaletteButtons() {
@@ -101,6 +80,18 @@ public class MementoApplication implements ActionListener{
             gridBagConstraints.ipady = buttonHeight;
             panel.add(button, gridBagConstraints);
         }
+    }
+    
+    private void createSavedButton(){
+        buttonOriginator = new ButtonOriginator(Color.LIGHT_GRAY);
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipady = 300;
+        gridBagConstraints.weightx = 0.0;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.insets = new Insets(50, 0, 50, 0);
+        panel.add(buttonOriginator, gridBagConstraints);
     }
 
     private void createCommandButtons() {
@@ -122,6 +113,19 @@ public class MementoApplication implements ActionListener{
         }
     }
     
+    private void showFrame() {
+        mainFrame.add(panel);
+        mainFrame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent windowEvent){
+                System.exit(0);
+            }        
+        });
+        
+        mainFrame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+        mainFrame.setVisible(true);
+    }
+    
     @Override
     public void actionPerformed(ActionEvent e) {
         String buttonName = ((JButton)(e.getSource())).getName();
@@ -139,14 +143,15 @@ public class MementoApplication implements ActionListener{
                 buttonOriginator.setColor(Color.BLACK);
                 break;
             case "Save":
-                buttonOriginator.save();
+                //buttonOriginator.save();
+                careTaker.save(buttonOriginator);
                 break;
             case "Undo":
-                if (! buttonOriginator.undo())
+                if (! careTaker.undo(buttonOriginator) )
                     JOptionPane.showMessageDialog(mainFrame, "No saved state");
                 break;
             default:
         }
     }
-    
+
 }

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package mementoapplication;
 
 /**
@@ -17,11 +12,18 @@ public class CareTaker {
         stack = new Stack(stackSize);
     }
     
-    public void saveMemento(ButtonMemento memento){
-        stack.push(memento);
+    // client requests to save a specific originator
+    public void save(ButtonOriginator buttonOriginator){
+        stack.push(buttonOriginator.createMemento());
     }
     
-    public ButtonMemento restoreMemento(){
-        return stack.pop();
+    // client requests to undo a specific originator
+    public Boolean undo(ButtonOriginator buttonOriginator){
+        Object poppedObject = stack.pop();
+        if(poppedObject != null){
+            buttonOriginator.restoreFromMemento(poppedObject);
+            return true;
+        }
+        return false;
     }
 }
