@@ -143,7 +143,6 @@ public class MementoApplication implements ActionListener{
                 buttonOriginator.setColor(Color.BLACK);
                 break;
             case "Save":
-                //buttonOriginator.save();
                 careTaker.save(buttonOriginator);
                 break;
             case "Undo":
